@@ -1,0 +1,25 @@
+<app-text-form-control
+  [control]="form.controls.email"
+  type="text"
+  label="Email"
+  placeholder="Enter your email..."
+></app-text-form-control>
+<div class="my-4"></div>
+<app-text-form-control
+  [control]="form.controls.password"
+  type="password"
+  label="Password"
+  placeholder="Enter your password..."
+></app-text-form-control>
+<div class="d-flex flex-row align-items-center justify-content-end">
+  <a class="btn btn-link" routerLink="/signup">Forgot password?</a>
+</div>
+
+<div class="w-100 d-flex justify-content-end align-items-center">
+  <button class="btn btn-primary my-4 w-100">Sign in</button>
+</div>
+
+<div class="d-flex flex-row align-items-center justify-content-center">
+  <p class="m-0">Haven't got an account?</p>
+  <a class="btn btn-link" routerLink="/signup">Sign up</a>
+</div>

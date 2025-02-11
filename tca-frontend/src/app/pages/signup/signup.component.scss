@@ -1,0 +1,36 @@
+h1 {
+  font-weight: 700;
+}
+
+img {
+  width: fit-content;
+  transform: translateY(-40%);
+}
+
+.page-container {
+  height: 100vh;
+  flex: 1;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.form-container {
+  flex: 1;
+  width: 25%;
+}
+
+.divider-container {
+  width: 100%;
+  .divider {
+    height: 1px;
+    width: 100%;
+    background-color: gray;
+  }
+}
+
+@media (max-width: 1024px) {
+  .form-container {
+    width: 80%;
+  }
+}

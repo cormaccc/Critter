@@ -1,0 +1,9 @@
+@media (max-width: 375px) {
+  p,
+  button,
+  a,
+  input::placeholder,
+  label {
+    font-size: 12px;
+  }
+}

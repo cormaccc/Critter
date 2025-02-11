@@ -1,0 +1,56 @@
+<span class="my-3 w-50">
+  <label class="fw-normal">{{ label }}</label>
+  <div
+    class="form-control d-flex flex-row align-items-center justify-content-between"
+    [ngClass]="{type, 'border border-danger': (control.touched || control.dirty) && control.invalid}"
+  >
+    <input
+      [type]="
+        (type === 'password' && showPassword) || type === 'text'
+          ? 'text'
+          : 'password'
+      "
+      [formControl]="control"
+      [placeholder]="placeholder"
+    />
+    <ng-container *ngIf="type === 'password' && control.value.length > 0">
+      <i
+        class="bi"
+        [class.bi-eye]="!showPassword"
+        [class.bi-eye-slash]="showPassword"
+        (click)="toggleShowPassword()"
+      ></i>
+    </ng-container>
+    <ng-container *ngIf="(control.touched || control.dirty) && control.invalid">
+      <i class="bi bi-exclamation-lg text-danger"></i>
+    </ng-container>
+  </div>
+  <small
+    *ngIf="(control.touched || control.dirty) && control?.errors?.required"
+    class="text-danger d-block"
+  >
+    {{ label }} is required.
+  </small>
+
+  <small
+    *ngIf="(control.touched || control.dirty) && control?.errors?.email"
+    class="text-danger d-block"
+  >
+    {{ label }} must be a valid email.
+  </small>
+  <small
+    *ngIf="(control.touched || control.dirty) && control?.errors?.password"
+    class="text-danger d-block text-break"
+  >
+    {{ label }} must be eight characters minimum, at least one letter, one
+    number and one special character:
+  </small>
+  <small
+    class="text-danger d-block text-break"
+    *ngIf="
+      (control.touched || control.dirty) && control?.errors?.passwordMismatch
+    "
+  >
+    Passwords must match.
+  </small>
+</span>

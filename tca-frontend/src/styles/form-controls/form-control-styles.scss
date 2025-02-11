@@ -1,0 +1,8 @@
+input {
+  border: none;
+  &:focus-visible {
+    outline: none !important;
+  }
+}
+
+@import "./text";

@@ -1,0 +1,50 @@
+h1 {
+  font-weight: 700;
+}
+
+img {
+  width: fit-content;
+  max-height: 100%;
+  // transform: translateY(-40%);
+}
+
+.image-container {
+  overflow: hidden;
+
+  img {
+  }
+}
+
+.page-container {
+  height: 100vh;
+  flex: 1;
+  flex-grow: 1;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.form-container {
+  flex-grow: 1;
+  width: 50%;
+}
+
+.divider-container {
+  width: 100%;
+  .divider {
+    height: 1px;
+    width: 100%;
+    background-color: gray;
+  }
+}
+
+@media (max-width: 1024px) {
+  .image-container {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .form-container {
+    width: 90%;
+  }
+}

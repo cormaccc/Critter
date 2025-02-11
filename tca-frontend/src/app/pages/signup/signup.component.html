@@ -1,0 +1,31 @@
+<div class="page-container d-flex align-items-center max-h-100 max-w-50">
+  <div class="d-flex align-items-center"></div>
+  <a
+    class="btn btn-link d-flex flex-row align-items-center align-self-start"
+    routerLink="/login"
+  >
+    <i class="bi bi-arrow-left"></i>
+    <p class="m-0 m-2">Back to login</p>
+  </a>
+  <div
+    class="form-container flex-column d-flex align-items-center justify-content-start"
+  >
+    <div class="d-flex flex-column justify-content-start">
+      <h1>Sign up.</h1>
+      <p>Create an account with your favourite app!</p>
+    </div>
+    <button class="o-auth-button btn btn-primary mb-3 w-100">
+      <i class="bi bi-google"></i> Create account with Google
+    </button>
+    <div
+      class="divider-container d-flex flex-row align-items-center justify-content-center mb-3"
+    >
+      <div class="divider mt-1"></div>
+      <span class="mx-2">or</span>
+      <div class="divider mt-1"></div>
+    </div>
+    <app-signup-form
+      class="w-100 d-flex flex-column justify-content-between h-50 max-w-100"
+    ></app-signup-form>
+  </div>
+</div>

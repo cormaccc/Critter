@@ -1,0 +1,10 @@
+.btn {
+  border-radius: 0;
+}
+
+.btn.btn-link.inverse {
+  &:hover {
+    text-decoration: underline;
+    text-decoration-color: white;
+  }
+}

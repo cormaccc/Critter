@@ -1,0 +1,43 @@
+<div class="d-flex flex-column justify-content-between h-100 mb-4">
+  <app-text-form-control
+    [control]="form.controls.firstName"
+    [label]="'First name'"
+    [placeholder]="'Enter first name...'"
+    [type]="'text'"
+  >
+  </app-text-form-control>
+  <app-text-form-control
+    [control]="form.controls.lastName"
+    [label]="'Last name'"
+    [placeholder]="'Enter last name...'"
+    [type]="'text'"
+  >
+  </app-text-form-control>
+  <app-text-form-control
+    [control]="form.controls.email"
+    [label]="'Email'"
+    [placeholder]="'Enter email address...'"
+    [type]="'text'"
+  >
+  </app-text-form-control>
+  <app-text-form-control
+    [control]="form.controls.password"
+    [label]="'Password'"
+    [placeholder]="'Enter password...'"
+    [type]="'password'"
+  >
+  </app-text-form-control>
+  <app-text-form-control
+    [control]="form.controls.confirmPassword"
+    label="Confirm password"
+    placeholder="Enter password again..."
+    type="password"
+  >
+  </app-text-form-control>
+  <button
+    class="btn btn-primary w-50 align-self-end mt-3"
+    [disabled]="!isFormValid"
+  >
+    Sign up
+  </button>
+</div>

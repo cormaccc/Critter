@@ -1,0 +1,16 @@
+﻿using TwitterCloneApp.Entities.Post;
+using TwitterCloneApp.Entities.User;
+
+namespace TwitterCloneApp.Entities.Repost
+{
+    public class RepostEntity
+    {
+        public long UserId { get; set; }
+        public UserEntity User { get; set; }
+
+        public long PostId { get; set; }
+        public PostEntity Post { get; set; }
+
+        public DateTime RepostedAt { get; set; } = DateTime.UtcNow;
+    }
+}
