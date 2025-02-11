@@ -1,4 +1,5 @@
-﻿using TwitterCloneApp.Contexts;
+﻿using BCrypt.Net;
+using TwitterCloneApp.Contexts;
 using TwitterCloneApp.Data.Inputs.User;
 using TwitterCloneApp.Entities.User;
 
@@ -16,8 +17,8 @@ namespace TwitterCloneApp.Data.Repositories.UserRepository
         public async Task<long> CreateUser(UserCreateInputDto userInfo)
         {
             using var context = _context;
-
-            var newUser = new UserEntity(userInfo.FirstName, userInfo.LastName, userInfo.Email, userInfo.Password, userInfo.Username);
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userInfo.Password);
+            var newUser = new UserEntity(userInfo.FirstName, userInfo.LastName, userInfo.Email, hashedPassword, userInfo.Username);
 
             await context.Users.AddAsync(newUser);
             await context.SaveChangesAsync();

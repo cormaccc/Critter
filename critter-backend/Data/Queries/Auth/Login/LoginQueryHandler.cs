@@ -1,4 +1,6 @@
-﻿using Dapper;
+﻿using BCrypt.Net;
+using CritterWebApi.Data.Outputs.User;
+using Dapper;
 using MediatR;
 using TwitterCloneApp.Contexts;
 
@@ -15,8 +17,8 @@ namespace TwitterCloneApp.Data.Queries.Auth.Login
         public async Task<long> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
             var query = @"
-                SELECT u.Id as UserId FROM Users u
-                WHERE u.Email = @email AND password = @password
+                SELECT u.Password as PasswordHash, u.Id as UserId  FROM Users u
+                WHERE u.Email = @email
             ";
 
             DynamicParameters dynamicParameters = new DynamicParameters();
@@ -25,9 +27,12 @@ namespace TwitterCloneApp.Data.Queries.Auth.Login
 
             using var conn = _context.CreateSQLiteConnnection();
 
-            var result = await conn.QueryFirstOrDefaultAsync<long>(query, dynamicParameters);
+            var result = await conn.QueryFirstOrDefaultAsync<UserLoginOutputDto>(query, dynamicParameters);
 
-            return result;
+            if (!BCrypt.Net.BCrypt.Verify(request.Password, result.PasswordHash)) throw new Exception("Login details are not correct");
+
+            return result.UserId;
+
         }
     }
 

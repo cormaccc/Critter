@@ -26,11 +26,11 @@ namespace TwitterCloneApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateUser(UserCreateInputDto request)
+        public async Task<IResult> CreateUser(UserCreateInputDto request)
         {
             var newUserId = await _mediator.Send(new CreateUserCommand { UserInfo = request });
 
-            return CreatedAtAction("GetUser", new { id = newUserId });
+            return Results.Ok(newUserId);
 
         }
 
