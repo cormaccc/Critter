@@ -1,6 +1,6 @@
 ﻿namespace CritterWebApi.Data.Models
 {
-    public class HttpAuthCookie
+    public class HttpCookie
     {
         public string Name { get; set; }
         public string TokenString { get; set; }

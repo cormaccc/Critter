@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CritterWebApi.Data.Commands.User.Login
 {
-    public class LoginCommand : IRequest<HttpAuthCookie?>
+    public class LoginCommand : IRequest<HttpCookie?>
     {
         public string Username { get; set; }
         public string Password { get; set; }

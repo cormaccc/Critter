@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CritterWebApi.Data.Commands.User.Login
 {
-    public class LoginCommandHandler : IRequestHandler<LoginCommand, HttpAuthCookie?>
+    public class LoginCommandHandler : IRequestHandler<LoginCommand, HttpCookie?>
     {
         private readonly IAuthService _authenticationService;
 
@@ -13,7 +13,7 @@ namespace CritterWebApi.Data.Commands.User.Login
             _authenticationService = authenticationService;
         }
 
-        public async Task<HttpAuthCookie?> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<HttpCookie?> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             return await _authenticationService.Authenticate(request.Username, request.Password, request.RememberMe);
         }

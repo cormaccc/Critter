@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using CritterWebApi.Services.ContextAccess;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TwitterCloneApp.Data.Commands.User.Create;
 using TwitterCloneApp.Data.Inputs.User;
@@ -11,17 +13,20 @@ namespace TwitterCloneApp.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IContextAccess _contextAccess;
 
-        public UserController(IMediator mediator)
+        public UserController(IMediator mediator, IContextAccess contextAccess)
         {
             _mediator = mediator;
+            _contextAccess = contextAccess;
         }
 
         [HttpGet]
+        [Authorize]
         [Route("{userId:long}")]
-        public async Task<IResult> GetUser(long userId)
+        public async Task<IResult> GetUser()
         {
-            var result = await _mediator.Send(new GetUserQuery { UserId = userId });
+            var result = await _mediator.Send(new GetUserQuery { UserId = _contextAccess.UserId });
             return Results.Ok(result);
         }
 
@@ -31,7 +36,6 @@ namespace TwitterCloneApp.Controllers
             var newUserId = await _mediator.Send(new CreateUserCommand { UserInfo = request });
 
             return Results.Ok(newUserId);
-
         }
 
         [HttpPatch]

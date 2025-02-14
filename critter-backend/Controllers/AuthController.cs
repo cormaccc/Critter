@@ -1,5 +1,6 @@
 ﻿using CritterWebApi.Data.Commands.User.Login;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TwitterCloneApp.Controllers
@@ -29,6 +30,7 @@ namespace TwitterCloneApp.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("logout")]
         public void Logout() {  throw new NotImplementedException(); }
     }
