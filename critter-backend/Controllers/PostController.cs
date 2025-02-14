@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TwitterCloneApp.Data.Commands.Post.Create;
 using TwitterCloneApp.Data.Commands.Post.Delete;
@@ -9,6 +10,7 @@ using TwitterCloneApp.Data.Commands.Post.Repost;
 using TwitterCloneApp.Data.Commands.Post.Unlike;
 using TwitterCloneApp.Data.Commands.Post.Unrepost;
 using TwitterCloneApp.Data.Inputs.Post;
+using TwitterCloneApp.Data.Outputs.Post;
 using TwitterCloneApp.Data.Queries.Post.GetPost;
 
 namespace TwitterCloneApp.Controllers
@@ -33,12 +35,15 @@ namespace TwitterCloneApp.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("{postId:long}")]
-        public async Task<IResult> GetPost(long postId)
+        public async Task<PostOutputDto> GetPost(long postId)
         {
             var result = await _mediator.Send(new GetPostQuery { Id = postId });
 
-            return Results.Ok(result);
+            if (result == null) throw new Exception("Could not find post");
+
+            return result;
         }
 
 

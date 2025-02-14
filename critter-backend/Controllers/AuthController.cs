@@ -1,7 +1,6 @@
-﻿using MediatR;
+﻿using CritterWebApi.Data.Commands.User.Login;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TwitterCloneApp.Data.Inputs.Auth;
-using TwitterCloneApp.Data.Queries.Auth.Login;
 
 namespace TwitterCloneApp.Controllers
 {
@@ -18,14 +17,15 @@ namespace TwitterCloneApp.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IResult> Login(LoginInputDto request)
+        public async Task<IResult> Login(LoginCommand request)
         {
-            var result = await _mediator.Send(new LoginQuery { Email = request.Email, Password = request.Password });
+            var result = await _mediator.Send(request);
 
-            if (result > 0)
-            {
-                return Results.Ok(result);
-            } else { return Results.BadRequest("Cannot login"); }
+            if (result == null) return Results.Unauthorized();
+
+            Response.Cookies.Append(result.Name, result.TokenString, result.CookieOptions);
+
+            return Results.Ok("Login success");
         }
 
         [HttpGet]
