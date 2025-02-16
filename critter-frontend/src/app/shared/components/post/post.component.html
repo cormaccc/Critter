@@ -1,0 +1,74 @@
+<div
+  *ngIf="post.postId"
+  class="post p-4 d-flex flex-row align-items-start justify-content-start"
+>
+  <div class="picture"></div>
+  <div class="content">
+    <div class="w-50 author d-flex flex-row align-items-center flex-wrap">
+      <a class="fw-bold">{{ post.author?.name }}</a>
+      <div class="d-flex flex-row align-items-center">
+        <small class="text-secondary">{{ "@" + post.author?.username }}</small>
+        <span class="text-secondary mx-1">&#x2022;</span>
+        <small class="text-secondary" *ngIf="post.createdAt">
+          {{ post.createdAt.toUTCString() | timeSince }}
+        </small>
+      </div>
+    </div>
+    <p>{{ post.body }}</p>
+    <div
+      class="interaction-container mt-3 d-flex flex-row align-items-center justify-content-between"
+    >
+      <div
+        class="interaction reply d-flex flex-row align-items-center justify-content-between"
+      >
+        <span
+          class="icon-container d-flex align-items-center justify-content-center"
+        >
+          <i class="bi bi-chat text-secondary"></i>
+        </span>
+        <p class="text-secondary">{{ post.replyCount }}</p>
+      </div>
+      <div
+        class="interaction like d-flex flex-row align-items-center justify-content-between"
+        (click)="
+          post.hasLiked ? unlikePost(post.postId) : likePost(post.postId)
+        "
+      >
+        <span
+          class="icon-container d-flex align-items-center justify-content-center"
+        >
+          <i
+            class="bi text-secondary"
+            [ngClass]="{
+              'bi-heart': !post.hasLiked,
+              'bi-heart-fill': post.hasLiked
+            }"
+          ></i>
+        </span>
+        <p class="text-secondary" [ngClass]="{ hasLike: post.hasLiked }">
+          {{ post.likeCount }}
+        </p>
+        <!-- <i class="bi bi-heart-fill"></i> -->
+      </div>
+      <div
+        class="interaction repost d-flex repost flex-row align-items-center justify-content-between"
+        (click)="repost()"
+      >
+        <span
+          class="icon-container d-flex align-items-center justify-content-center"
+        >
+          <i
+            class="bi text-secondary"
+            [ngClass]="{
+              'bi-share': !post.hasReposted,
+              'bi-share-fill': post.hasReposted
+            }"
+          ></i>
+        </span>
+        <p class="text-secondary" [ngClass]="{ isReposted: post.hasReposted }">
+          {{ post.repostCount }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,23 +1,13 @@
 body,
 html {
   height: 100%;
-  background-color: rgb(0, 2, 10);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-button,
-label {
-  color: white;
+  background-color: black;
+  scrollbar-color: rgb(107, 107, 107) rgb(172, 172, 172);
+  scrollbar-width: thin;
 }
 
 /* You can add global styles to this file, and also import other style files */
 @import "./styles/form-controls/form-control-styles.scss";
 @import "./styles/btn";
-@import "./styles/chevron.scss";
 @import "./styles/text";
+@import "./styles/mat/material-styles.scss";

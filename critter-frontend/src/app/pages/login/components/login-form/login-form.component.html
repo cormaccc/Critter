@@ -18,7 +18,9 @@
 <div class="w-100 d-flex justify-content-end align-items-center">
   <button class="btn btn-primary my-4 w-100" (click)="login()">Sign in</button>
 </div>
-
+<p *ngIf="incorrectLogin" class="text-danger">
+  Login credentials are incorrect.
+</p>
 <div class="d-flex flex-row align-items-center justify-content-center">
   <p class="m-0">Haven't got an account?</p>
   <a class="btn btn-link" routerLink="/signup">Sign up</a>

@@ -1,0 +1,131 @@
+$likeColor: rgb(255, 0, 119);
+$repostColor: rgb(6, 184, 0);
+$replyColor: rgba(0, 140, 255, 1);
+
+.post {
+  border-bottom: 0.25px rgba(128, 128, 128, 0.479) solid;
+  .picture {
+    margin: 5px 10px 0px 0px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: white;
+  }
+
+  .content {
+    min-width: 75%;
+    max-width: 85%;
+
+    .author {
+      p {
+        margin-right: 5px;
+      }
+
+      a {
+        margin-right: 10px;
+      }
+    }
+
+    .interaction {
+      margin-left: -10px;
+
+      &-container {
+        width: 150px;
+      }
+      .icon-container {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
+
+      .icon-container,
+      p {
+        transition: color 0.1s ease-in-out;
+        transition: background 0.1s ease-in-out;
+      }
+
+      &.reply {
+        &:hover {
+          p {
+            color: $replyColor !important;
+          }
+
+          .icon-container {
+            background-color: rgba(9, 226, 255, 0.164);
+
+            i {
+              color: $replyColor !important;
+            }
+          }
+
+          transition: color 0.25s;
+        }
+      }
+
+      &.like {
+        &:hover {
+          p {
+            color: $likeColor !important;
+          }
+
+          .icon-container {
+            background-color: rgba(255, 0, 119, 0.267) !important;
+          }
+
+          i {
+            color: $likeColor !important;
+          }
+        }
+      }
+
+      &.repost {
+        i {
+          margin: auto;
+          margin-bottom: 4px;
+          margin-left: 5px;
+        }
+        &:hover {
+          p {
+            color: $repostColor !important;
+          }
+
+          .icon-container {
+            background-color: rgba(6, 184, 0, 0.308) !important;
+          }
+
+          i {
+            color: $repostColor !important;
+          }
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      i {
+        margin-bottom: 0px;
+
+        &.bi-heart-fill {
+          color: $likeColor !important;
+        }
+
+        &.bi-share-fill {
+          color: $repostColor !important;
+        }
+      }
+
+      p {
+        font-size: 14px;
+
+        &.hasLike {
+          color: $likeColor !important;
+        }
+
+        &.isReposted {
+          color: $repostColor !important;
+        }
+      }
+    }
+  }
+}

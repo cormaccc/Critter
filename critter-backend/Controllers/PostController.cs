@@ -47,7 +47,7 @@ namespace TwitterCloneApp.Controllers
         [Route("{postId:long}")]
         public async Task<PostOutputDto> GetPost(long postId)
         {
-            var result = await _mediator.Send(new GetPostQuery { Id = postId });
+            var result = await _mediator.Send(new GetPostQuery { PostId = postId, UserId = _contextAccess.UserId });
 
             if (result == null) throw new Exception("Could not find post");
 
@@ -82,37 +82,37 @@ namespace TwitterCloneApp.Controllers
         [HttpPost]
         [Authorize]
         [Route("{postId:long}/like")]
-        public async Task<IResult> LikePost([FromBody] PostActionInputDto request)
+        public async Task<IResult> LikePost(long postId)
         {
-            await _mediator.Send(new LikePostCommand { PostId = request.PostId, UserId = _contextAccess.UserId });
+            await _mediator.Send(new LikePostCommand { PostId = postId, UserId = _contextAccess.UserId });
             return Results.Ok();
         }
 
         [HttpPost]
         [Authorize]
         [Route("{postId:long}/unlike")]
-        public async Task<IResult> UnlikePost([FromBody] PostActionInputDto request)
+        public async Task<IResult> UnlikePost(long postId)
         {
-            await _mediator.Send(new UnlikePostCommand { PostId = request.PostId, UserId = _contextAccess.UserId });
+            await _mediator.Send(new UnlikePostCommand { PostId = postId, UserId = _contextAccess.UserId });
             return Results.Ok();
         }
 
         [HttpPost]
         [Authorize]
         [Route("{postId:long}/repost")]
-        public async Task<IResult> RepostPost([FromBody] PostActionInputDto request)
+        public async Task<IResult> RepostPost(long postId)
         {
-            await _mediator.Send(new RepostCommand { PostId = request.PostId, UserId = _contextAccess.UserId });
+            await _mediator.Send(new RepostCommand { PostId = postId, UserId = _contextAccess.UserId });
             return Results.Ok();
         }
 
         [HttpPost]
         [Authorize]
         [Route("{postId:long}/unrepost")]
-        public async Task<IResult> UnrepostPost([FromBody] PostActionInputDto request)
+        public async Task<IResult> UnrepostPost(long postId)
         {
-            await _mediator.Send(new UnrepostCommand { PostId = request.PostId, UserId = _contextAccess.UserId });
-            return Results.Ok(request);
+            await _mediator.Send(new UnrepostCommand { PostId = postId, UserId = _contextAccess.UserId });
+            return Results.Ok();
         }
 
         [HttpPost]

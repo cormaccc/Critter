@@ -2,6 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TwitterCloneApp.Data.Inputs.Feed;
+using TwitterCloneApp.Data.Outputs.Post;
 using TwitterCloneApp.Data.Queries.Feed;
 
 namespace TwitterCloneApp.Controllers
@@ -20,13 +22,11 @@ namespace TwitterCloneApp.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IResult> GetFeed(GetFeedQuery request)
+        public async Task<IEnumerable<PostOutputDto>> GetFeed(GetFeedInputDto request)
         {
-           if (request == null) return Results.BadRequest();
+            if (request == null) throw new Exception("Invalid Feed request");
             
-           var posts = await _mediator.Send(request);
-
-           return Results.Ok(posts);
+           return await _mediator.Send(new GetFeedQuery { Take = request.Take, Skip = request.Skip, PageIndex = request.PageIndex, UserId = _context.UserId});
         }
 
     }

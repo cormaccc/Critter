@@ -5,6 +5,7 @@ namespace TwitterCloneApp.Data.Queries.Post.GetPost
 {
     public class GetPostQuery : IRequest<PostOutputDto>
     {
-        public long Id { get; set; }
+        public long UserId { get; set; }
+        public long PostId { get; set; }
     }
 }

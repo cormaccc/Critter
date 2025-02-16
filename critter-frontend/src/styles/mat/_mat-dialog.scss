@@ -1,0 +1,23 @@
+.app-dialog {
+  &.repost {
+    max-width: 100% !important;
+    min-width: 100% !important;
+    max-height: 100vh;
+    border-radius: 10px !important;
+  }
+}
+
+.cdk-overlay-backdrop {
+  background: rgba(91, 112, 131, 0.4);
+}
+
+.mdc-dialog__container {
+  overflow: hidden;
+  .mat-mdc-dialog-surface {
+    overflow-y: hidden;
+  }
+}
+
+.cdk-global-scrollblock {
+  overflow-y: hidden;
+}

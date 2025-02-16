@@ -214,7 +214,7 @@ export class AuthService implements IAuthService {
 }
 
 export interface IFeedService {
-  getFeed(request: GetFeedQuery): Observable<FileResponse>;
+  getFeed(request: GetFeedInputDto): Observable<PostOutputDto[]>;
 }
 
 @Injectable()
@@ -232,7 +232,7 @@ export class FeedService implements IFeedService {
     this.baseUrl = baseUrl ?? '';
   }
 
-  getFeed(request: GetFeedQuery): Observable<FileResponse> {
+  getFeed(request: GetFeedInputDto): Observable<PostOutputDto[]> {
     let url_ = this.baseUrl + '/Feed';
     url_ = url_.replace(/[?&]$/, '');
 
@@ -244,7 +244,7 @@ export class FeedService implements IFeedService {
       responseType: 'blob',
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Accept: 'application/octet-stream',
+        Accept: 'application/json',
       }),
     };
 
@@ -261,19 +261,19 @@ export class FeedService implements IFeedService {
             try {
               return this.processGetFeed(response_ as any);
             } catch (e) {
-              return _observableThrow(e) as any as Observable<FileResponse>;
+              return _observableThrow(e) as any as Observable<PostOutputDto[]>;
             }
           } else
-            return _observableThrow(
-              response_
-            ) as any as Observable<FileResponse>;
+            return _observableThrow(response_) as any as Observable<
+              PostOutputDto[]
+            >;
         })
       );
   }
 
   protected processGetFeed(
     response: HttpResponseBase
-  ): Observable<FileResponse> {
+  ): Observable<PostOutputDto[]> {
     const status = response.status;
     const responseBlob =
       response instanceof HttpResponse
@@ -288,36 +288,24 @@ export class FeedService implements IFeedService {
         _headers[key] = response.headers.get(key);
       }
     }
-    if (status === 200 || status === 206) {
-      const contentDisposition = response.headers
-        ? response.headers.get('content-disposition')
-        : undefined;
-      let fileNameMatch = contentDisposition
-        ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(
-            contentDisposition
-          )
-        : undefined;
-      let fileName =
-        fileNameMatch && fileNameMatch.length > 1
-          ? fileNameMatch[3] || fileNameMatch[2]
-          : undefined;
-      if (fileName) {
-        fileName = decodeURIComponent(fileName);
-      } else {
-        fileNameMatch = contentDisposition
-          ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition)
-          : undefined;
-        fileName =
-          fileNameMatch && fileNameMatch.length > 1
-            ? fileNameMatch[1]
-            : undefined;
-      }
-      return _observableOf({
-        fileName: fileName,
-        data: responseBlob as any,
-        status: status,
-        headers: _headers,
-      });
+    if (status === 200) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText: string) => {
+          let result200: any = null;
+          let resultData200 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          if (Array.isArray(resultData200)) {
+            result200 = [] as any;
+            for (let item of resultData200)
+              result200!.push(PostOutputDto.fromJS(item));
+          } else {
+            result200 = <any>null;
+          }
+          return _observableOf(result200);
+        })
+      );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
         _observableMergeMap((_responseText: string) => {
@@ -345,22 +333,10 @@ export interface IPostService {
     postId: string,
     request: PostDeleteInputDto
   ): Observable<FileResponse>;
-  likePost(
-    postId: string,
-    request: PostActionInputDto
-  ): Observable<FileResponse>;
-  unlikePost(
-    postId: string,
-    request: PostActionInputDto
-  ): Observable<FileResponse>;
-  repostPost(
-    postId: string,
-    request: PostActionInputDto
-  ): Observable<FileResponse>;
-  unrepostPost(
-    postId: string,
-    request: PostActionInputDto
-  ): Observable<FileResponse>;
+  likePost(postId: number): Observable<FileResponse>;
+  unlikePost(postId: number): Observable<FileResponse>;
+  repostPost(postId: number): Observable<FileResponse>;
+  unrepostPost(postId: number): Observable<FileResponse>;
   reply(postId: string, request: ReplyInputDto): Observable<FileResponse>;
 }
 
@@ -776,24 +752,17 @@ export class PostService implements IPostService {
     return _observableOf(null as any);
   }
 
-  likePost(
-    postId: string,
-    request: PostActionInputDto
-  ): Observable<FileResponse> {
+  likePost(postId: number): Observable<FileResponse> {
     let url_ = this.baseUrl + '/posts/{postId}/like';
     if (postId === undefined || postId === null)
       throw new Error("The parameter 'postId' must be defined.");
     url_ = url_.replace('{postId}', encodeURIComponent('' + postId));
     url_ = url_.replace(/[?&]$/, '');
 
-    const content_ = JSON.stringify(request);
-
     let options_: any = {
-      body: content_,
       observe: 'response',
       responseType: 'blob',
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Accept: 'application/octet-stream',
       }),
     };
@@ -883,24 +852,17 @@ export class PostService implements IPostService {
     return _observableOf(null as any);
   }
 
-  unlikePost(
-    postId: string,
-    request: PostActionInputDto
-  ): Observable<FileResponse> {
+  unlikePost(postId: number): Observable<FileResponse> {
     let url_ = this.baseUrl + '/posts/{postId}/unlike';
     if (postId === undefined || postId === null)
       throw new Error("The parameter 'postId' must be defined.");
     url_ = url_.replace('{postId}', encodeURIComponent('' + postId));
     url_ = url_.replace(/[?&]$/, '');
 
-    const content_ = JSON.stringify(request);
-
     let options_: any = {
-      body: content_,
       observe: 'response',
       responseType: 'blob',
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Accept: 'application/octet-stream',
       }),
     };
@@ -990,24 +952,17 @@ export class PostService implements IPostService {
     return _observableOf(null as any);
   }
 
-  repostPost(
-    postId: string,
-    request: PostActionInputDto
-  ): Observable<FileResponse> {
+  repostPost(postId: number): Observable<FileResponse> {
     let url_ = this.baseUrl + '/posts/{postId}/repost';
     if (postId === undefined || postId === null)
       throw new Error("The parameter 'postId' must be defined.");
     url_ = url_.replace('{postId}', encodeURIComponent('' + postId));
     url_ = url_.replace(/[?&]$/, '');
 
-    const content_ = JSON.stringify(request);
-
     let options_: any = {
-      body: content_,
       observe: 'response',
       responseType: 'blob',
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Accept: 'application/octet-stream',
       }),
     };
@@ -1097,24 +1052,17 @@ export class PostService implements IPostService {
     return _observableOf(null as any);
   }
 
-  unrepostPost(
-    postId: string,
-    request: PostActionInputDto
-  ): Observable<FileResponse> {
+  unrepostPost(postId: number): Observable<FileResponse> {
     let url_ = this.baseUrl + '/posts/{postId}/unrepost';
     if (postId === undefined || postId === null)
       throw new Error("The parameter 'postId' must be defined.");
     url_ = url_.replace('{postId}', encodeURIComponent('' + postId));
     url_ = url_.replace(/[?&]$/, '');
 
-    const content_ = JSON.stringify(request);
-
     let options_: any = {
-      body: content_,
       observe: 'response',
       responseType: 'blob',
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Accept: 'application/octet-stream',
       }),
     };
@@ -1308,7 +1256,7 @@ export class PostService implements IPostService {
 }
 
 export interface IUserService {
-  getUser(userId: number): Observable<FileResponse>;
+  getUser(userId: string): Observable<FileResponse>;
   updateUser(userId: string): Observable<void>;
   deleteUser(userId: string): Observable<void>;
   createUser(request: UserCreateInputDto): Observable<FileResponse>;
@@ -1329,7 +1277,7 @@ export class UserService implements IUserService {
     this.baseUrl = baseUrl ?? '';
   }
 
-  getUser(userId: number): Observable<FileResponse> {
+  getUser(userId: string): Observable<FileResponse> {
     let url_ = this.baseUrl + '/User/{userId}';
     if (userId === undefined || userId === null)
       throw new Error("The parameter 'userId' must be defined.");
@@ -1717,97 +1665,13 @@ export interface ILoginCommand {
   rememberMe?: boolean;
 }
 
-export class GetFeedQuery implements IGetFeedQuery {
-  take?: number;
-  skip?: number;
-  pageIndex?: number;
-
-  constructor(data?: IGetFeedQuery) {
-    if (data) {
-      for (var property in data) {
-        if (data.hasOwnProperty(property))
-          (<any>this)[property] = (<any>data)[property];
-      }
-    }
-  }
-
-  init(_data?: any) {
-    if (_data) {
-      this.take = _data['take'] !== undefined ? _data['take'] : <any>null;
-      this.skip = _data['skip'] !== undefined ? _data['skip'] : <any>null;
-      this.pageIndex =
-        _data['pageIndex'] !== undefined ? _data['pageIndex'] : <any>null;
-    }
-  }
-
-  static fromJS(data: any): GetFeedQuery {
-    data = typeof data === 'object' ? data : {};
-    let result = new GetFeedQuery();
-    result.init(data);
-    return result;
-  }
-
-  toJSON(data?: any) {
-    data = typeof data === 'object' ? data : {};
-    data['take'] = this.take !== undefined ? this.take : <any>null;
-    data['skip'] = this.skip !== undefined ? this.skip : <any>null;
-    data['pageIndex'] =
-      this.pageIndex !== undefined ? this.pageIndex : <any>null;
-    return data;
-  }
-}
-
-export interface IGetFeedQuery {
-  take?: number;
-  skip?: number;
-  pageIndex?: number;
-}
-
-export class PostCreateInputDto implements IPostCreateInputDto {
-  userId?: number;
-  body?: string;
-
-  constructor(data?: IPostCreateInputDto) {
-    if (data) {
-      for (var property in data) {
-        if (data.hasOwnProperty(property))
-          (<any>this)[property] = (<any>data)[property];
-      }
-    }
-  }
-
-  init(_data?: any) {
-    if (_data) {
-      this.userId = _data['userId'] !== undefined ? _data['userId'] : <any>null;
-      this.body = _data['body'] !== undefined ? _data['body'] : <any>null;
-    }
-  }
-
-  static fromJS(data: any): PostCreateInputDto {
-    data = typeof data === 'object' ? data : {};
-    let result = new PostCreateInputDto();
-    result.init(data);
-    return result;
-  }
-
-  toJSON(data?: any) {
-    data = typeof data === 'object' ? data : {};
-    data['userId'] = this.userId !== undefined ? this.userId : <any>null;
-    data['body'] = this.body !== undefined ? this.body : <any>null;
-    return data;
-  }
-}
-
-export interface IPostCreateInputDto {
-  userId?: number;
-  body?: string;
-}
-
 export class PostOutputDto implements IPostOutputDto {
   postId?: number;
   createdAt?: Date | null;
   body?: string;
   author?: AuthorDto;
+  hasLiked?: boolean;
+  hasReposted?: boolean;
   likeCount?: number;
   replyCount?: number;
   repostCount?: number;
@@ -1835,6 +1699,10 @@ export class PostOutputDto implements IPostOutputDto {
       this.author = _data['author']
         ? AuthorDto.fromJS(_data['author'])
         : <any>null;
+      this.hasLiked =
+        _data['hasLiked'] !== undefined ? _data['hasLiked'] : <any>null;
+      this.hasReposted =
+        _data['hasReposted'] !== undefined ? _data['hasReposted'] : <any>null;
       this.likeCount =
         _data['likeCount'] !== undefined ? _data['likeCount'] : <any>null;
       this.replyCount =
@@ -1859,6 +1727,9 @@ export class PostOutputDto implements IPostOutputDto {
       : <any>null;
     data['body'] = this.body !== undefined ? this.body : <any>null;
     data['author'] = this.author ? this.author.toJSON() : <any>null;
+    data['hasLiked'] = this.hasLiked !== undefined ? this.hasLiked : <any>null;
+    data['hasReposted'] =
+      this.hasReposted !== undefined ? this.hasReposted : <any>null;
     data['likeCount'] =
       this.likeCount !== undefined ? this.likeCount : <any>null;
     data['replyCount'] =
@@ -1874,6 +1745,8 @@ export interface IPostOutputDto {
   createdAt?: Date | null;
   body?: string;
   author?: IAuthorDto;
+  hasLiked?: boolean;
+  hasReposted?: boolean;
   likeCount?: number;
   replyCount?: number;
   repostCount?: number;
@@ -1882,6 +1755,7 @@ export interface IPostOutputDto {
 export class AuthorDto implements IAuthorDto {
   authorId?: number;
   username?: string;
+  name?: string;
 
   constructor(data?: IAuthorDto) {
     if (data) {
@@ -1898,6 +1772,7 @@ export class AuthorDto implements IAuthorDto {
         _data['authorId'] !== undefined ? _data['authorId'] : <any>null;
       this.username =
         _data['username'] !== undefined ? _data['username'] : <any>null;
+      this.name = _data['name'] !== undefined ? _data['name'] : <any>null;
     }
   }
 
@@ -1912,6 +1787,7 @@ export class AuthorDto implements IAuthorDto {
     data = typeof data === 'object' ? data : {};
     data['authorId'] = this.authorId !== undefined ? this.authorId : <any>null;
     data['username'] = this.username !== undefined ? this.username : <any>null;
+    data['name'] = this.name !== undefined ? this.name : <any>null;
     return data;
   }
 }
@@ -1919,10 +1795,92 @@ export class AuthorDto implements IAuthorDto {
 export interface IAuthorDto {
   authorId?: number;
   username?: string;
+  name?: string;
+}
+
+export class GetFeedInputDto implements IGetFeedInputDto {
+  take?: number;
+  skip?: number;
+  pageIndex?: number;
+
+  constructor(data?: IGetFeedInputDto) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.take = _data['take'] !== undefined ? _data['take'] : <any>null;
+      this.skip = _data['skip'] !== undefined ? _data['skip'] : <any>null;
+      this.pageIndex =
+        _data['pageIndex'] !== undefined ? _data['pageIndex'] : <any>null;
+    }
+  }
+
+  static fromJS(data: any): GetFeedInputDto {
+    data = typeof data === 'object' ? data : {};
+    let result = new GetFeedInputDto();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data['take'] = this.take !== undefined ? this.take : <any>null;
+    data['skip'] = this.skip !== undefined ? this.skip : <any>null;
+    data['pageIndex'] =
+      this.pageIndex !== undefined ? this.pageIndex : <any>null;
+    return data;
+  }
+}
+
+export interface IGetFeedInputDto {
+  take?: number;
+  skip?: number;
+  pageIndex?: number;
+}
+
+export class PostCreateInputDto implements IPostCreateInputDto {
+  body?: string;
+
+  constructor(data?: IPostCreateInputDto) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.body = _data['body'] !== undefined ? _data['body'] : <any>null;
+    }
+  }
+
+  static fromJS(data: any): PostCreateInputDto {
+    data = typeof data === 'object' ? data : {};
+    let result = new PostCreateInputDto();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data['body'] = this.body !== undefined ? this.body : <any>null;
+    return data;
+  }
+}
+
+export interface IPostCreateInputDto {
+  body?: string;
 }
 
 export class PostEditInputDto implements IPostEditInputDto {
-  userId?: number;
   postId?: number;
   body?: string;
 
@@ -1937,7 +1895,6 @@ export class PostEditInputDto implements IPostEditInputDto {
 
   init(_data?: any) {
     if (_data) {
-      this.userId = _data['userId'] !== undefined ? _data['userId'] : <any>null;
       this.postId = _data['postId'] !== undefined ? _data['postId'] : <any>null;
       this.body = _data['body'] !== undefined ? _data['body'] : <any>null;
     }
@@ -1952,7 +1909,6 @@ export class PostEditInputDto implements IPostEditInputDto {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
-    data['userId'] = this.userId !== undefined ? this.userId : <any>null;
     data['postId'] = this.postId !== undefined ? this.postId : <any>null;
     data['body'] = this.body !== undefined ? this.body : <any>null;
     return data;
@@ -1960,14 +1916,12 @@ export class PostEditInputDto implements IPostEditInputDto {
 }
 
 export interface IPostEditInputDto {
-  userId?: number;
   postId?: number;
   body?: string;
 }
 
 export class PostDeleteInputDto implements IPostDeleteInputDto {
   postId?: number;
-  userId?: number;
 
   constructor(data?: IPostDeleteInputDto) {
     if (data) {
@@ -1981,7 +1935,6 @@ export class PostDeleteInputDto implements IPostDeleteInputDto {
   init(_data?: any) {
     if (_data) {
       this.postId = _data['postId'] !== undefined ? _data['postId'] : <any>null;
-      this.userId = _data['userId'] !== undefined ? _data['userId'] : <any>null;
     }
   }
 
@@ -1995,58 +1948,15 @@ export class PostDeleteInputDto implements IPostDeleteInputDto {
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
     data['postId'] = this.postId !== undefined ? this.postId : <any>null;
-    data['userId'] = this.userId !== undefined ? this.userId : <any>null;
     return data;
   }
 }
 
 export interface IPostDeleteInputDto {
   postId?: number;
-  userId?: number;
-}
-
-export class PostActionInputDto implements IPostActionInputDto {
-  userId?: number;
-  postId?: number;
-
-  constructor(data?: IPostActionInputDto) {
-    if (data) {
-      for (var property in data) {
-        if (data.hasOwnProperty(property))
-          (<any>this)[property] = (<any>data)[property];
-      }
-    }
-  }
-
-  init(_data?: any) {
-    if (_data) {
-      this.userId = _data['userId'] !== undefined ? _data['userId'] : <any>null;
-      this.postId = _data['postId'] !== undefined ? _data['postId'] : <any>null;
-    }
-  }
-
-  static fromJS(data: any): PostActionInputDto {
-    data = typeof data === 'object' ? data : {};
-    let result = new PostActionInputDto();
-    result.init(data);
-    return result;
-  }
-
-  toJSON(data?: any) {
-    data = typeof data === 'object' ? data : {};
-    data['userId'] = this.userId !== undefined ? this.userId : <any>null;
-    data['postId'] = this.postId !== undefined ? this.postId : <any>null;
-    return data;
-  }
-}
-
-export interface IPostActionInputDto {
-  userId?: number;
-  postId?: number;
 }
 
 export class ReplyInputDto implements IReplyInputDto {
-  userId?: number;
   parentPostId?: number;
   body?: string;
 
@@ -2061,7 +1971,6 @@ export class ReplyInputDto implements IReplyInputDto {
 
   init(_data?: any) {
     if (_data) {
-      this.userId = _data['userId'] !== undefined ? _data['userId'] : <any>null;
       this.parentPostId =
         _data['parentPostId'] !== undefined ? _data['parentPostId'] : <any>null;
       this.body = _data['body'] !== undefined ? _data['body'] : <any>null;
@@ -2077,7 +1986,6 @@ export class ReplyInputDto implements IReplyInputDto {
 
   toJSON(data?: any) {
     data = typeof data === 'object' ? data : {};
-    data['userId'] = this.userId !== undefined ? this.userId : <any>null;
     data['parentPostId'] =
       this.parentPostId !== undefined ? this.parentPostId : <any>null;
     data['body'] = this.body !== undefined ? this.body : <any>null;
@@ -2086,7 +1994,6 @@ export class ReplyInputDto implements IReplyInputDto {
 }
 
 export interface IReplyInputDto {
-  userId?: number;
   parentPostId?: number;
   body?: string;
 }
