@@ -2,11 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TwitterCloneApp.Data.Commands.User.Create;
-using TwitterCloneApp.Data.Inputs.User;
-using TwitterCloneApp.Data.Queries.User.GetUser;
+using CritterWebApi.Data.Commands.User.Create;
+using CritterWebApi.Data.Inputs.User;
+using CritterWebApi.Data.Queries.User.GetUser;
 
-namespace TwitterCloneApp.Controllers
+namespace CritterWebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

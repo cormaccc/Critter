@@ -1,9 +1,8 @@
-﻿using BCrypt.Net;
-using TwitterCloneApp.Contexts;
-using TwitterCloneApp.Data.Inputs.User;
-using TwitterCloneApp.Entities.User;
+﻿using CritterWebApi.Contexts;
+using CritterWebApi.Data.Inputs.User;
+using CritterWebApi.Entities.User;
 
-namespace TwitterCloneApp.Data.Repositories.UserRepository
+namespace CritterWebApi.Data.Repositories.UserRepository
 {
     public class UserRepository : IUserRepository
     {

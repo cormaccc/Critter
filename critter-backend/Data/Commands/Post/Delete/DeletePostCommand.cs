@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace TwitterCloneApp.Data.Commands.Post.Delete
+namespace CritterWebApi.Data.Commands.Post.Delete
 {
     public class DeletePostCommand : IRequest
     {

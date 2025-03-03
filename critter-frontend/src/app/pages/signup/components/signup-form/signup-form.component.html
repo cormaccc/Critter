@@ -1,5 +1,11 @@
 <div class="d-flex flex-column justify-content-between h-100 mb-4">
   <app-text-form-control
+    [control]="form.controls.username"
+    [label]="'Username'"
+    [placeholder]="'Pick a username'"
+    [type]="'text'"
+  ></app-text-form-control>
+  <app-text-form-control
     [control]="form.controls.firstName"
     [label]="'First name'"
     [placeholder]="'Enter first name...'"
@@ -37,6 +43,7 @@
   <button
     class="btn btn-primary w-50 align-self-end mt-3"
     [disabled]="!isFormValid"
+    (click)="signup()"
   >
     Sign up
   </button>

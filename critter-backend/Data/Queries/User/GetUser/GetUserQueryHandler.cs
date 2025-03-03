@@ -1,9 +1,9 @@
 ﻿using Dapper;
 using MediatR;
-using TwitterCloneApp.Contexts;
-using TwitterCloneApp.Data.Outputs;
+using CritterWebApi.Contexts;
+using CritterWebApi.Data.Outputs;
 
-namespace TwitterCloneApp.Data.Queries.User.GetUser
+namespace CritterWebApi.Data.Queries.User.GetUser
 {
     public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserOutputDto>
     {

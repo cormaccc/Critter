@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using TwitterCloneApp.Data.Repositories.PostRepository;
+using CritterWebApi.Data.Repositories.PostRepository;
 
-namespace TwitterCloneApp.Data.Commands.Post.Create
+namespace CritterWebApi.Data.Commands.Post.Create
 {
     public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand>
     {

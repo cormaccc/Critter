@@ -1,4 +1,4 @@
-﻿namespace TwitterCloneApp.Data.Inputs.Auth
+﻿namespace CritterWebApi.Data.Inputs.Auth
 {
     public class LoginInputDto
     {

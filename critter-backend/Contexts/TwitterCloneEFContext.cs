@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TwitterCloneApp.Entities.Post;
-using TwitterCloneApp.Entities.User;
+using CritterWebApi.Entities.Post;
+using CritterWebApi.Entities.User;
 
-namespace TwitterCloneApp.Contexts
+namespace CritterWebApi.Contexts
 {
     public class TwitterCloneEFContext : DbContext
     {

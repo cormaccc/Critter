@@ -2,11 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TwitterCloneApp.Data.Inputs.Feed;
-using TwitterCloneApp.Data.Outputs.Post;
-using TwitterCloneApp.Data.Queries.Feed;
+using CritterWebApi.Data.Inputs.Feed;
+using CritterWebApi.Data.Outputs.Post;
+using CritterWebApi.Data.Queries.Feed;
 
-namespace TwitterCloneApp.Controllers
+namespace CritterWebApi.Controllers
 {
     [ApiController]
     [Route("Feed")]

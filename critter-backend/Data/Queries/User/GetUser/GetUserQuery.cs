@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using TwitterCloneApp.Data.Outputs;
+using CritterWebApi.Data.Outputs;
 
-namespace TwitterCloneApp.Data.Queries.User.GetUser
+namespace CritterWebApi.Data.Queries.User.GetUser
 {
     public class GetUserQuery : IRequest<UserOutputDto>
     {

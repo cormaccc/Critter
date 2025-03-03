@@ -1,4 +1,4 @@
-﻿namespace TwitterCloneApp.Data.Inputs.Feed
+﻿namespace CritterWebApi.Data.Inputs.Feed
 {
     public class GetFeedInputDto
     {

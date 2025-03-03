@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace TwitterCloneApp.Entities.Repost
+namespace CritterWebApi.Entities.Repost
 {
     public class RepostEntityConfiguration : IEntityTypeConfiguration<RepostEntity>
     {
@@ -21,6 +21,8 @@ namespace TwitterCloneApp.Entities.Repost
 
             builder.Property(r => r.RepostedAt)
                 .HasDefaultValue("CURRENT_TIMESTAMP");
+
+            builder.Property(r => r.Quote).HasMaxLength(255);
         }
     }
 }

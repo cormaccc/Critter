@@ -1,4 +1,4 @@
-﻿namespace TwitterCloneApp.Data.Inputs.Post
+﻿namespace CritterWebApi.Data.Inputs.Post
 {
     public class PostCreateInputDto
     {

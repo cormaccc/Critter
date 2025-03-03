@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using TwitterCloneApp.Data.Inputs.Auth;
+using CritterWebApi.Data.Inputs.Auth;
 
-namespace TwitterCloneApp.Data.Queries.Auth.Login
+namespace CritterWebApi.Data.Queries.Auth.Login
 {
     public class LoginQuery : IRequest<long>
     {

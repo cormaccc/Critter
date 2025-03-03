@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using TwitterCloneApp.Data.Repositories.PostRepository;
+using CritterWebApi.Data.Repositories.PostRepository;
 
-namespace TwitterCloneApp.Data.Commands.Post.Delete
+namespace CritterWebApi.Data.Commands.Post.Delete
 {
     public class DeletePostCommandHandler : IRequestHandler<DeletePostCommand>
     {

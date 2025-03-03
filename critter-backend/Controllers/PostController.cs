@@ -2,19 +2,19 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TwitterCloneApp.Data.Commands.Post.Create;
-using TwitterCloneApp.Data.Commands.Post.Delete;
-using TwitterCloneApp.Data.Commands.Post.Edit;
-using TwitterCloneApp.Data.Commands.Post.Like;
-using TwitterCloneApp.Data.Commands.Post.ReplyToPost;
-using TwitterCloneApp.Data.Commands.Post.Repost;
-using TwitterCloneApp.Data.Commands.Post.Unlike;
-using TwitterCloneApp.Data.Commands.Post.Unrepost;
-using TwitterCloneApp.Data.Inputs.Post;
-using TwitterCloneApp.Data.Outputs.Post;
-using TwitterCloneApp.Data.Queries.Post.GetPost;
+using CritterWebApi.Data.Commands.Post.Create;
+using CritterWebApi.Data.Commands.Post.Delete;
+using CritterWebApi.Data.Commands.Post.Edit;
+using CritterWebApi.Data.Commands.Post.Like;
+using CritterWebApi.Data.Commands.Post.ReplyToPost;
+using CritterWebApi.Data.Commands.Post.Repost;
+using CritterWebApi.Data.Commands.Post.Unlike;
+using CritterWebApi.Data.Commands.Post.Unrepost;
+using CritterWebApi.Data.Inputs.Post;
+using CritterWebApi.Data.Outputs.Post;
+using CritterWebApi.Data.Queries.Post.GetPost;
 
-namespace TwitterCloneApp.Controllers
+namespace CritterWebApi.Controllers
 {
     [ApiController]
     [Route("posts")]
@@ -112,7 +112,7 @@ namespace TwitterCloneApp.Controllers
         public async Task<IResult> UnrepostPost(long postId)
         {
             await _mediator.Send(new UnrepostCommand { PostId = postId, UserId = _contextAccess.UserId });
-            return Results.Ok();
+            return Results.Ok("Success");
         }
 
         [HttpPost]
@@ -122,7 +122,7 @@ namespace TwitterCloneApp.Controllers
         {
             await _mediator.Send(new ReplyToPostCommand { UserId = _contextAccess.UserId, ParentPostId = request.ParentPostId, Body = request.Body });
 
-            return Results.Ok();
+            return Results.Ok("Success");
         }
     }
 }

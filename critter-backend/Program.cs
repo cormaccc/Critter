@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using TwitterCloneApp.Contexts;
-using TwitterCloneApp.Data.Repositories.PostRepository;
-using TwitterCloneApp.Data.Repositories.UserRepository;
+using CritterWebApi.Contexts;
+using CritterWebApi.Data.Repositories.PostRepository;
+using CritterWebApi.Data.Repositories.UserRepository;
 using CritterWebApi.Middleware.BasicAuthentication;
 using CritterWebApi.Data.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

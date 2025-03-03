@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TwitterCloneApp.Contexts;
-using TwitterCloneApp.Entities.Post;
+﻿using CritterWebApi.Contexts;
+using CritterWebApi.Entities.Post;
+using Microsoft.EntityFrameworkCore;
 
-namespace TwitterCloneApp.Data.Repositories.PostRepository
+namespace CritterWebApi.Data.Repositories.PostRepository
 {
     public class PostRepository : IPostRepository
     {
@@ -105,15 +105,20 @@ namespace TwitterCloneApp.Data.Repositories.PostRepository
         {
             using var context = _context;
 
-            var post = await context.Posts
-                .Include(p => p.RepostedByUsers)
-                .FirstOrDefaultAsync(p => p.Id == postId);
+            var user = await context.Users
+                .Include(u => u.RepostedPosts)
+                .FirstOrDefaultAsync(u => u.Id == userId);
 
-            var user = await context.Users.FindAsync(userId);
+            if (user != null)
+            {
+                var post = await context.Posts.FirstOrDefaultAsync(p => p.Id == postId);
 
-
-            context.Entry(post).Collection(p => p.RepostedByUsers).Load();
-            post.LikedByUsers.Remove(user);
+                if (post != null)
+                {
+                    user.RepostedPosts.Remove(post);
+                    await _context.SaveChangesAsync();
+                }
+            }
 
             await context.SaveChangesAsync();
         }

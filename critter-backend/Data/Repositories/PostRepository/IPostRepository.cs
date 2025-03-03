@@ -1,4 +1,4 @@
-﻿namespace TwitterCloneApp.Data.Repositories.PostRepository
+﻿namespace CritterWebApi.Data.Repositories.PostRepository
 {
     public interface IPostRepository
     {

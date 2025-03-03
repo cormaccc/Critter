@@ -1,5 +1,8 @@
 <div class="feed">
-  <ng-container *ngFor="let post of posts$ | async">
+  {{ posts | async | consoleLog }}
+
+  <ng-container *ngFor="let post of posts | async">
+    {{ posts | consoleLog }}
     <app-post
       [post]="post"
       (openRepostModal)="openRepostModal($event)"

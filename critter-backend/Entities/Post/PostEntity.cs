@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-using TwitterCloneApp.Entities.User;
+using CritterWebApi.Entities.User;
 
-namespace TwitterCloneApp.Entities.Post
+namespace CritterWebApi.Entities.Post
 {
     [EntityTypeConfiguration(typeof(PostEntityConfiguration))]
     public class PostEntity

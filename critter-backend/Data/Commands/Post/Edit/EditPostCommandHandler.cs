@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using TwitterCloneApp.Data.Repositories.PostRepository;
+using CritterWebApi.Data.Repositories.PostRepository;
 
-namespace TwitterCloneApp.Data.Commands.Post.Edit
+namespace CritterWebApi.Data.Commands.Post.Edit
 {
     public class EditPostCommandHandler : IRequestHandler<EditPostCommand>
     {

@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using TwitterCloneApp.Contexts;
-using TwitterCloneApp.Data.Repositories.PostRepository;
+using CritterWebApi.Contexts;
+using CritterWebApi.Data.Repositories.PostRepository;
 
-namespace TwitterCloneApp.Data.Commands.Post.Like
+namespace CritterWebApi.Data.Commands.Post.Like
 {
     public class LikePostCommandHandler : IRequestHandler<LikePostCommand>
     {

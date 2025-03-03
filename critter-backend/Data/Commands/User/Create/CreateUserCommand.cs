@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using TwitterCloneApp.Data.Inputs.User;
+using CritterWebApi.Data.Inputs.User;
 
-namespace TwitterCloneApp.Data.Commands.User.Create
+namespace CritterWebApi.Data.Commands.User.Create
 {
     public class CreateUserCommand : IRequest<long>
     {

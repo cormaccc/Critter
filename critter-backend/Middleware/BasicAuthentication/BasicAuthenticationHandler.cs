@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
-using TwitterCloneApp.Contexts;
+using CritterWebApi.Contexts;
 
 namespace CritterWebApi.Middleware.BasicAuthentication
 {

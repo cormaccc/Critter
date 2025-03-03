@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TwitterCloneApp.Entities.Post;
-using TwitterCloneApp.Entities.Repost;
+using CritterWebApi.Entities.Post;
+using CritterWebApi.Entities.Repost;
 
-namespace TwitterCloneApp.Entities.User
+namespace CritterWebApi.Entities.User
 {
     public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
     {

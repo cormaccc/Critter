@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace TwitterCloneApp.Data.Commands.Post.Repost
+namespace CritterWebApi.Data.Commands.Post.Repost
 {
     public class RepostCommand : IRequest
     {

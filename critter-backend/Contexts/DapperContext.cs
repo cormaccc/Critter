@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using System.Data;
 
-namespace TwitterCloneApp.Contexts
+namespace CritterWebApi.Contexts
 {
     public class DapperContext
     {

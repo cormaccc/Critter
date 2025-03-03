@@ -1,6 +1,6 @@
-﻿using TwitterCloneApp.Data.Inputs.User;
+﻿using CritterWebApi.Data.Inputs.User;
 
-namespace TwitterCloneApp.Data.Repositories.UserRepository
+namespace CritterWebApi.Data.Repositories.UserRepository
 {
     public interface IUserRepository
     {

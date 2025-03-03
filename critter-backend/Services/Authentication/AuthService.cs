@@ -6,8 +6,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
-using TwitterCloneApp.Contexts;
-using TwitterCloneApp.Entities.User;
+using CritterWebApi.Contexts;
+using CritterWebApi.Entities.User;
 
 namespace CritterWebApi.Services.Authentication
 {

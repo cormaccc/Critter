@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TwitterCloneApp.Controllers
+namespace CritterWebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

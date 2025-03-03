@@ -7,12 +7,12 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { TimeSincePipe } from '../../pipes/time-since.pipe';
 import { PostOutputDto, PostService } from '../../services/service-proxies';
 import { map } from 'rxjs';
 import { CustomRxJsOperators } from '../../operators/custom-rxjs-operators';
 import { RepostModalComponent } from './components/repost-modal/repost-modal.component';
 import { IRepostEvent } from './components/repost-modal/repost-modal.model';
+import { TimeSincePipe } from '../../pipes/time-since/time-since.pipe';
 
 @Component({
   selector: 'app-post',

@@ -1,7 +1,7 @@
-﻿using TwitterCloneApp.Entities.Post;
-using TwitterCloneApp.Entities.User;
+﻿using CritterWebApi.Entities.Post;
+using CritterWebApi.Entities.User;
 
-namespace TwitterCloneApp.Entities.Repost
+namespace CritterWebApi.Entities.Repost
 {
     public class RepostEntity
     {
@@ -11,6 +11,7 @@ namespace TwitterCloneApp.Entities.Repost
         public long PostId { get; set; }
         public PostEntity Post { get; set; }
 
+        public string Quote { get; set; }
         public DateTime RepostedAt { get; set; } = DateTime.UtcNow;
     }
 }

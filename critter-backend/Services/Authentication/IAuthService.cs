@@ -1,5 +1,5 @@
 ﻿using CritterWebApi.Data.Models;
-using TwitterCloneApp.Entities.User;
+using CritterWebApi.Entities.User;
 
 namespace CritterWebApi.Services.Authentication
 {

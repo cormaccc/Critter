@@ -1,4 +1,4 @@
-﻿namespace TwitterCloneApp.Data.Outputs
+﻿namespace CritterWebApi.Data.Outputs
 {
     public class UserOutputDto
     {

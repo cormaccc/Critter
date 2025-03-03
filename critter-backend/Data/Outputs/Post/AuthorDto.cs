@@ -1,4 +1,4 @@
-﻿namespace TwitterCloneApp.Data.Outputs.Post
+﻿namespace CritterWebApi.Data.Outputs.Post
 {
     public class AuthorDto
     {

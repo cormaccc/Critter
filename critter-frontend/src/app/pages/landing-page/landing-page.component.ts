@@ -14,7 +14,5 @@ import { FeedComponent } from './components/feed/feed.component';
 export class LandingPageComponent implements OnInit {
   constructor(private postsService: PostService) {}
 
-  ngOnInit(): void {
-    this.postsService.getPost(5).subscribe((result) => console.log(result));
-  }
+  ngOnInit(): void {}
 }

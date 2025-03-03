@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace TwitterCloneApp.Migrations
+namespace CritterApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class quote_column : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,7 +36,7 @@ namespace TwitterCloneApp.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
                     Body = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     isEdited = table.Column<bool>(type: "INTEGER", nullable: false),
                     isReply = table.Column<bool>(type: "INTEGER", nullable: false),
                     ParentPostId = table.Column<long>(type: "INTEGER", nullable: true)
@@ -49,7 +49,7 @@ namespace TwitterCloneApp.Migrations
                         column: x => x.ParentPostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Posts_Users_UserId",
                         column: x => x.UserId,
@@ -88,6 +88,7 @@ namespace TwitterCloneApp.Migrations
                 {
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
                     PostId = table.Column<long>(type: "INTEGER", nullable: false),
+                    Quote = table.Column<string>(type: "TEXT", nullable: false),
                     RepostedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>

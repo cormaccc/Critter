@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using TwitterCloneApp.Data.Repositories.PostRepository;
+using CritterWebApi.Data.Repositories.PostRepository;
 
-namespace TwitterCloneApp.Data.Commands.Post.Unlike
+namespace CritterWebApi.Data.Commands.Post.Unlike
 {
     public class UnlikePostCommandHandler : IRequestHandler<UnlikePostCommand>
     {

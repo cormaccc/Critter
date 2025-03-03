@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace TwitterCloneApp.Data.Commands.Post.Unrepost
+namespace CritterWebApi.Data.Commands.Post.Unrepost
 {
     public class UnrepostCommand : IRequest
     {

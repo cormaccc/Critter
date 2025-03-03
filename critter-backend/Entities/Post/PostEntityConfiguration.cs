@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TwitterCloneApp.Entities.Repost;
-using TwitterCloneApp.Entities.User;
+using CritterWebApi.Entities.Repost;
+using CritterWebApi.Entities.User;
 
-namespace TwitterCloneApp.Entities.Post
+namespace CritterWebApi.Entities.Post
 {
     public class PostEntityConfiguration : IEntityTypeConfiguration<PostEntity>
     {

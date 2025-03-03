@@ -2,9 +2,9 @@
 using CritterWebApi.Data.Outputs.User;
 using Dapper;
 using MediatR;
-using TwitterCloneApp.Contexts;
+using CritterWebApi.Contexts;
 
-namespace TwitterCloneApp.Data.Queries.Auth.Login
+namespace CritterWebApi.Data.Queries.Auth.Login
 {
     public class LoginQueryHandler : IRequestHandler<LoginQuery, long>
     {

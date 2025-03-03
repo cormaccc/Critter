@@ -1,10 +1,10 @@
 ﻿using Dapper;
 using MediatR;
 using System.Globalization;
-using TwitterCloneApp.Contexts;
-using TwitterCloneApp.Data.Outputs.Post;
+using CritterWebApi.Contexts;
+using CritterWebApi.Data.Outputs.Post;
 
-namespace TwitterCloneApp.Data.Queries.Post.GetPost
+namespace CritterWebApi.Data.Queries.Post.GetPost
 {
     public class GetPostQueryHandler : IRequestHandler<GetPostQuery, PostOutputDto>
     {

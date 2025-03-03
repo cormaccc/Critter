@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace TwitterCloneApp.Data.Commands.Post.Unlike
+namespace CritterWebApi.Data.Commands.Post.Unlike
 {
     public class UnlikePostCommand : IRequest
     {
