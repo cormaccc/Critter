@@ -22,10 +22,12 @@ export const routes: Routes = [
   },
   {
     path: 'feed',
+    canActivate: [authGuard],
     component: LandingPageComponent,
   },
   {
     path: 'compose',
+    canActivate: [authGuard],
     children: [
       {
         path: '',

@@ -11,7 +11,6 @@ export const authHeaderInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(clonedRequest).pipe(
     catchError((error) => {
-      debugger;
       if (error?.status === 401) {
         router.navigate(['account', 'login']);
       }

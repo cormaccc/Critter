@@ -29,12 +29,10 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeedComponent implements OnInit {
-
   postsSubject = new BehaviorSubject<PostOutputDto[]>([]);
   matDialog = inject(MatDialog);
 
   get posts(): Observable<PostOutputDto[]> {
-    debugger;
     return this.postsSubject.asObservable();
   }
 
@@ -49,7 +47,6 @@ export class FeedComponent implements OnInit {
   }
 
   openRepostModal(event: IRepostEvent): void {
-    debugger;
     const dialogRef = this.matDialog.open<RepostModalComponent>(
       RepostModalComponent,
       {
@@ -74,7 +71,7 @@ export class FeedComponent implements OnInit {
           dialogRef.close();
         });
 
-    if (event.isReposted)
+    if (event.isReposted) {
       dialogRef.componentInstance.unrepostEvent
         .pipe(
           take(1),
@@ -84,6 +81,13 @@ export class FeedComponent implements OnInit {
           this.getPostsForFeed();
           dialogRef.close();
         });
+    }
+    dialogRef.componentInstance.quoteEvent.subscribe(() => {
+      this.router.navigate(['compose', 'post'], {
+        queryParams: { postId: event.postId },
+      });
+      dialogRef.close();
+    });
   }
 
   getPostsForFeed() {
@@ -91,7 +95,6 @@ export class FeedComponent implements OnInit {
       .getFeed(new GetFeedInputDto({ take: 10, skip: 0, pageIndex: 0 }))
       .pipe(take(1))
       .subscribe((posts) => {
-        debugger;
         this.postsSubject.next(posts);
       });
   }

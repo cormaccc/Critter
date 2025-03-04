@@ -24,13 +24,14 @@ import { UserImageComponent } from '../user-image/user-image.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostComponent {
+  @Input() post!: PostOutputDto;
+  @Input() isQuote = false;
+  @Output() openRepostModal = new EventEmitter<IRepostEvent>();
+
   constructor(
     private postService: PostService,
     private cd: ChangeDetectorRef
   ) {}
-
-  @Input() post!: PostOutputDto;
-  @Output() openRepostModal = new EventEmitter<IRepostEvent>();
 
   private operators: CustomRxJsOperators = new CustomRxJsOperators(
     this.postService
@@ -47,7 +48,6 @@ export class PostComponent {
   }
 
   protected unlikePost(postId: number): void {
-    debugger;
     this.postService
       .unlikePost(postId)
       .pipe(

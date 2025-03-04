@@ -11,18 +11,22 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 })
 export class RepostModalComponent {
   private dialogRef = inject(MatDialogRef);
-
   public isReposted = false;
 
   repostEvent = new EventEmitter();
   unrepostEvent = new EventEmitter();
+  quoteEvent = new EventEmitter();
 
-  repost(): void {
-    this.repostEvent.emit();
+  handleRepostClick(): void {
+    if (this.isReposted) {
+      this.unrepostEvent.emit();
+    } else {
+      this.repostEvent.emit();
+    }
   }
 
-  unrepost(): void {
-    this.unrepostEvent.emit();
+  quote(): void {
+    this.quoteEvent.emit();
   }
 
   closeModal(): void {

@@ -4,6 +4,11 @@ $replyColor: rgba(0, 140, 255, 1);
 
 .post {
   border-bottom: 0.25px rgba(128, 128, 128, 0.479) solid;
+
+  &.quoted {
+    border: 0.25px rgba(128, 128, 128, 0.479) solid;
+    border-radius: 10px;
+  }
   .picture {
     margin: 5px 10px 0px 0px;
     width: 28px;

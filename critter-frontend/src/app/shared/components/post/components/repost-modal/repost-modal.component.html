@@ -2,12 +2,12 @@
   <div class="button-group">
     <div
       class="button d-flex flex-row align-items-center"
-      (click)="!isReposted ? repost() : unrepost()"
+      (click)="handleRepostClick()"
     >
       <i class="bi bi-share"></i>
       <p>{{ !isReposted ? "Repost" : "Undo repost" }}</p>
     </div>
-    <div class="button d-flex flex-row align-items-center">
+    <div class="button d-flex flex-row align-items-center" (click)="quote()">
       <i class="bi bi-chat-right-quote"></i>
       <p>Quote</p>
     </div>

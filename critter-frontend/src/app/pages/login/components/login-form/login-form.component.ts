@@ -31,7 +31,6 @@ export class LoginFormComponent {
 
   protected login(): void {
     this.form.markAllAsTouched();
-    debugger;
     if (this.form.valid) {
       this.authService
         .login(

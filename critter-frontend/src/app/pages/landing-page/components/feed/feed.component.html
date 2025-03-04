@@ -1,8 +1,5 @@
 <div class="feed">
-  {{ posts | async | consoleLog }}
-
   <ng-container *ngFor="let post of posts | async">
-    {{ posts | consoleLog }}
     <app-post
       [post]="post"
       (openRepostModal)="openRepostModal($event)"
@@ -10,6 +7,9 @@
   </ng-container>
 </div>
 
-<div class="compose-btn d-flex justify-content-center align-items-center" (click)="navigateToCompose()">
+<div
+  class="compose-btn d-flex justify-content-center align-items-center"
+  (click)="navigateToCompose()"
+>
   <span>+</span><i class="bi bi-feather"></i>
 </div>

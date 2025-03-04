@@ -1,28 +1,42 @@
 <div class="d-flex flex-row justify-content-between p-4 pb-0">
-    <button class="btn btn-clean" (click)="navigateBack()">
-        <i class="bi bi-arrow-left"></i>
-    </button>
-    <button class="post-button" [disabled]="newPostForm.invalid">Post</button>
+  <button class="btn btn-clean" (click)="navigateBack()">
+    <i class="bi bi-arrow-left"></i>
+  </button>
+  <button
+    class="post-button"
+    [disabled]="newPostForm.invalid"
+    (click)="createPost()"
+  >
+    Post
+  </button>
 </div>
 <div class="row d-flex flex-row p-4">
-    <div class="col-2">
-        <app-user-image></app-user-image>
-    </div>
-    <div class="col-10">
-        <textarea class="col-10 form-control" placeholder="What's on your mind?"></textarea>
-    </div>
+  <div class="col-2">
+    <app-user-image></app-user-image>
+  </div>
+  <div class="col-10">
+    <textarea
+      class="col-10 form-control"
+      [formControl]="newPostForm.controls.post"
+      placeholder="What's on your mind?"
+    ></textarea>
+  </div>
 </div>
+<ng-container *ngIf="post$ | async as post">
+  <div class="mx-4 my-2">
+    <app-post [post]="post" [isQuote]="true"></app-post>
+  </div>
+</ng-container>
 <div class="action-bar d-flex flex-row mx-4 px-2 pt-2">
-    <span class="mx-2">
-        <i class="bi bi-image"></i>
-    </span>
-    <span class="mx-2">
-        <i class="bi bi-filetype-gif"></i>
-    </span>
-    <span class="mx-2">
-        <i class="bi bi-emoji-grin"></i>
-    </span>
-    <span></span>
-    <span></span>
+  <span class="mx-2">
+    <i class="bi bi-image"></i>
+  </span>
+  <span class="mx-2">
+    <i class="bi bi-filetype-gif"></i>
+  </span>
+  <span class="mx-2">
+    <i class="bi bi-emoji-grin"></i>
+  </span>
+  <span></span>
+  <span></span>
 </div>
-
