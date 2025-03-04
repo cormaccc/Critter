@@ -8,13 +8,34 @@
     padding: 5px;
   }
 
+
   & input {
     width: 90%;
+  }
+
+  & textarea {
+    background-color: transparent !important;
   }
 
   &.password {
     i:hover {
       cursor: pointer;
     }
+  }
+}
+
+textarea {
+  background-color: transparent !important;
+  border: unset !important;
+  color: white !important;
+  resize: none;
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.187) !important;
+  }
+
+  &:focus {
+    border: unset !important;
+    outline: none !important;
+    box-shadow: unset !important;
   }
 }

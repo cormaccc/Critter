@@ -2,7 +2,7 @@
   *ngIf="post.postId"
   class="post p-4 d-flex flex-row align-items-start justify-content-start"
 >
-  <div class="picture"></div>
+  <app-user-image></app-user-image>
   <div class="content">
     <small
       *ngIf="post.repost?.reposterId"

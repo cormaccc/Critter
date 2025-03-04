@@ -3,7 +3,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
-import { ComposePostComponent } from './pages/compose/post/post.component';
+import { ComposePostComponent } from './pages/compose/post/compose-post.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'account/login', pathMatch: 'full' },
@@ -22,12 +22,10 @@ export const routes: Routes = [
   },
   {
     path: 'feed',
-    canActivate: [authGuard],
     component: LandingPageComponent,
   },
   {
     path: 'compose',
-    canActivate: [authGuard],
     children: [
       {
         path: '',

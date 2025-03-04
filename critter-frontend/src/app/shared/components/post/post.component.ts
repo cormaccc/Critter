@@ -10,14 +10,14 @@ import {
 import { PostOutputDto, PostService } from '../../services/service-proxies';
 import { map } from 'rxjs';
 import { CustomRxJsOperators } from '../../operators/custom-rxjs-operators';
-import { RepostModalComponent } from './components/repost-modal/repost-modal.component';
 import { IRepostEvent } from './components/repost-modal/repost-modal.model';
 import { TimeSincePipe } from '../../pipes/time-since/time-since.pipe';
+import { UserImageComponent } from '../user-image/user-image.component';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [CommonModule, TimeSincePipe, RepostModalComponent],
+  imports: [CommonModule, TimeSincePipe, UserImageComponent],
   providers: [PostService],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
@@ -28,6 +28,7 @@ export class PostComponent {
     private postService: PostService,
     private cd: ChangeDetectorRef
   ) {}
+
   @Input() post!: PostOutputDto;
   @Output() openRepostModal = new EventEmitter<IRepostEvent>();
 

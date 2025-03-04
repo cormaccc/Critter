@@ -17,6 +17,7 @@ import { RepostModalComponent } from '../../../../shared/components/post/compone
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { IRepostEvent } from '../../../../shared/components/post/components/repost-modal/repost-modal.model';
 import { ConsoleLogPipe } from '../../../../shared/pipes/console-log/console-log.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-feed',
@@ -28,7 +29,7 @@ import { ConsoleLogPipe } from '../../../../shared/pipes/console-log/console-log
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeedComponent implements OnInit {
-  // posts$: Observable<PostOutputDto[]> = new Observable();
+
   postsSubject = new BehaviorSubject<PostOutputDto[]>([]);
   matDialog = inject(MatDialog);
 
@@ -39,7 +40,8 @@ export class FeedComponent implements OnInit {
 
   constructor(
     private feedService: FeedService,
-    private postsService: PostService
+    private postsService: PostService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -92,5 +94,9 @@ export class FeedComponent implements OnInit {
         debugger;
         this.postsSubject.next(posts);
       });
+  }
+
+  navigateToCompose() {
+    this.router.navigate(['compose', 'post']);
   }
 }

@@ -1,0 +1,24 @@
+
+.post-button {
+    padding: 5px 16px;
+    border-radius: 25px;
+    border: unset;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    background-color: rgb(0, 141, 207);
+
+    &:disabled {
+        background-color: rgba(0, 141, 207, 0.299);
+        color: rgba(255, 255, 255, 0.662)
+    }
+}
+
+.action-bar {
+    border-top: 1px solid gray;
+    span {
+        i {
+            color: rgb(0, 141, 207);
+        }
+    }
+}
